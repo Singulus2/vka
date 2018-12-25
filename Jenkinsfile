@@ -6,20 +6,6 @@ node {
     }
 
 
-    stage('clean') {
-        mvnw clean
-    }
-
-
-    stage('backend tests') {
-        try {
-            mvnw test
-        } catch(err) {
-            throw err
-        } finally {
-            junit '**/target/surefire-reports/TEST-*.xml'
-        }
-    }
 
 
     stage('packaging') {
