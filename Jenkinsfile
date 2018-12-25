@@ -5,9 +5,6 @@ node {
         checkout scm
     }
 
-    stage('check java') {
-        java -version
-    }
 
     stage('clean') {
         ./mvnw clean
