@@ -7,20 +7,20 @@ node {
 
 
     stage('clean') {
-        ./mvnw clean
+        mvnw clean
     }
 
     stage('install tools') {
-        ./mvnw com.github.eirslett:frontend-maven-plugin:install-node-and-npm -DnodeVersion=v10.14.1 -DnpmVersion=6.4.1
+        mvnw com.github.eirslett:frontend-maven-plugin:install-node-and-npm -DnodeVersion=v10.14.1 -DnpmVersion=6.4.1
     }
 
     stage('npm install') {
-        ./mvnw com.github.eirslett:frontend-maven-plugin:npm
+        mvnw com.github.eirslett:frontend-maven-plugin:npm
     }
 
     stage('backend tests') {
         try {
-            ./mvnw test
+            mvnw test
         } catch(err) {
             throw err
         } finally {
@@ -30,7 +30,7 @@ node {
 
     stage('frontend tests') {
         try {
-            ./mvnw com.github.eirslett:frontend-maven-plugin:npm -Dfrontend.npm.arguments='run test'
+            mvnw com.github.eirslett:frontend-maven-plugin:npm -Dfrontend.npm.arguments='run test'
         } catch(err) {
             throw err
         } finally {
@@ -39,7 +39,7 @@ node {
     }
 
     stage('packaging') {
-        ./mvnw verify deploy -Pprod -DskipTests
+        mvnw verify deploy -Pprod -DskipTests
         archiveArtifacts artifacts: '**/target/*.war', fingerprint: true
     }
 }
