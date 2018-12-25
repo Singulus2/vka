@@ -21,15 +21,6 @@ node {
         }
     }
 
-    stage('frontend tests') {
-        try {
-            mvnw com.github.eirslett:frontend-maven-plugin:npm -Dfrontend.npm.arguments='run test'
-        } catch(err) {
-            throw err
-        } finally {
-            junit '**/target/test-results/jest/TESTS-*.xml'
-        }
-    }
 
     stage('packaging') {
         mvnw verify deploy -Pprod -DskipTests
