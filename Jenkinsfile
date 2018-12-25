@@ -5,9 +5,9 @@ node {
         checkout scm
     }
 
--    stage('check java') {
--        java -version
--    }
+    stage('check java') {
+        java -version
+    }
 
     stage('clean') {
         bat "./mvnw clean"
