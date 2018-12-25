@@ -10,13 +10,6 @@ node {
         mvnw clean
     }
 
-    stage('install tools') {
-        mvnw com.github.eirslett:frontend-maven-plugin:install-node-and-npm -DnodeVersion=v10.14.1 -DnpmVersion=6.4.1
-    }
-
-    stage('npm install') {
-        mvnw com.github.eirslett:frontend-maven-plugin:npm
-    }
 
     stage('backend tests') {
         try {
