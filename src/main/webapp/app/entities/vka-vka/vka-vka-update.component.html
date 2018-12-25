@@ -1,0 +1,119 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-vka-vka-heading" jhiTranslate="vkaApp.vka.home.createOrEditLabel">Create or edit a Vka</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!vka.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="vka.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="vkaApp.vka.vnr" for="field_vnr">Vnr</label>
+                    <input type="text" class="form-control" name="vnr" id="field_vnr"
+                        [(ngModel)]="vka.vnr" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="vkaApp.vka.versArt" for="field_versArt">Vers Art</label>
+                    <input type="text" class="form-control" name="versArt" id="field_versArt"
+                        [(ngModel)]="vka.versArt" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="vkaApp.vka.prioritaet" for="field_prioritaet">Prioritaet</label>
+                    <input type="text" class="form-control" name="prioritaet" id="field_prioritaet"
+                        [(ngModel)]="vka.prioritaet" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="vkaApp.vka.bearbDat" for="field_bearbDat">Bearb Dat</label>
+                    <input type="text" class="form-control" name="bearbDat" id="field_bearbDat"
+                        [(ngModel)]="vka.bearbDat" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="vkaApp.vka.bearbUhr" for="field_bearbUhr">Bearb Uhr</label>
+                    <input type="text" class="form-control" name="bearbUhr" id="field_bearbUhr"
+                        [(ngModel)]="vka.bearbUhr" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="vkaApp.vka.status" for="field_status">Status</label>
+                    <input type="text" class="form-control" name="status" id="field_status"
+                        [(ngModel)]="vka.status" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="vkaApp.vka.rd" for="field_rd">Rd</label>
+                    <input type="text" class="form-control" name="rd" id="field_rd"
+                        [(ngModel)]="vka.rd" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="vkaApp.vka.ges" for="field_ges">Ges</label>
+                    <input type="text" class="form-control" name="ges" id="field_ges"
+                        [(ngModel)]="vka.ges" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="vkaApp.vka.bza" for="field_bza">Bza</label>
+                    <input type="text" class="form-control" name="bza" id="field_bza"
+                        [(ngModel)]="vka.bza" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="vkaApp.vka.tarif" for="field_tarif">Tarif</label>
+                    <input type="text" class="form-control" name="tarif" id="field_tarif"
+                        [(ngModel)]="vka.tarif" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="vkaApp.vka.tarifUnr1" for="field_tarifUnr1">Tarif Unr 1</label>
+                    <input type="text" class="form-control" name="tarifUnr1" id="field_tarifUnr1"
+                        [(ngModel)]="vka.tarifUnr1" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="vkaApp.vka.tarifUnr2" for="field_tarifUnr2">Tarif Unr 2</label>
+                    <input type="text" class="form-control" name="tarifUnr2" id="field_tarifUnr2"
+                        [(ngModel)]="vka.tarifUnr2" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="vkaApp.vka.mkt1" for="field_mkt1">Mkt 1</label>
+                    <input type="text" class="form-control" name="mkt1" id="field_mkt1"
+                        [(ngModel)]="vka.mkt1" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="vkaApp.vka.bewegSchl" for="field_bewegSchl">Beweg Schl</label>
+                    <input type="text" class="form-control" name="bewegSchl" id="field_bewegSchl"
+                        [(ngModel)]="vka.bewegSchl" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="vkaApp.vka.wirkungDat" for="field_wirkungDat">Wirkung Dat</label>
+                    <input type="text" class="form-control" name="wirkungDat" id="field_wirkungDat"
+                        [(ngModel)]="vka.wirkungDat" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="vkaApp.vka.antAufnDat" for="field_antAufnDat">Ant Aufn Dat</label>
+                    <input type="text" class="form-control" name="antAufnDat" id="field_antAufnDat"
+                        [(ngModel)]="vka.antAufnDat" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="vkaApp.vka.antEingDat" for="field_antEingDat">Ant Eing Dat</label>
+                    <input type="text" class="form-control" name="antEingDat" id="field_antEingDat"
+                        [(ngModel)]="vka.antEingDat" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="vkaApp.vka.anzahlStruk" for="field_anzahlStruk">Anzahl Struk</label>
+                    <input type="text" class="form-control" name="anzahlStruk" id="field_anzahlStruk"
+                        [(ngModel)]="vka.anzahlStruk" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="vkaApp.vka.btg" for="field_btg">Btg</label>
+                    <input type="number" class="form-control" name="btg" id="field_btg"
+                        [(ngModel)]="vka.btg" />
+                </div>
+
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

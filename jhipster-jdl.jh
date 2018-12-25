@@ -1,0 +1,43 @@
+entity Vka {
+	vnr String
+    versArt String
+    prioritaet String
+    bearbDat String
+    bearbUhr String
+    status String
+    rd String
+    ges String
+    bza String
+    tarif String
+    tarifUnr1 String
+    tarifUnr2 String
+    mkt1 String
+    bewegSchl String
+    wirkungDat String
+    antAufnDat String
+    antEingDat String
+    anzahlStruk String
+    btg BigDecimal
+}
+
+
+// an ignored comment
+/** not an ignored comment */
+
+/**
+ * Task entity.
+ * @author The JHipster team.
+ */
+
+
+// Set pagination options
+paginate Vka with pagination
+
+// Use Data Transfert Objects (DTO)
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceClass 
+
+// Set an angular suffix
+angularSuffix * with vka

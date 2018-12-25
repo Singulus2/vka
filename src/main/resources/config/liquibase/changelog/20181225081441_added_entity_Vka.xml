@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <property name="now" value="now()" dbms="h2"/>
+
+    <property name="now" value="now()" dbms="mysql"/>
+    <property name="autoIncrement" value="true"/>
+
+    <property name="floatType" value="float4" dbms="postgresql, h2"/>
+    <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
+
+    <!--
+        Added the entity Vka.
+    -->
+    <changeSet id="20181225081441-1" author="jhipster">
+        <createTable tableName="vka">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="vnr" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="vers_art" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="prioritaet" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="bearb_dat" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="bearb_uhr" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="status" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="rd" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="ges" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="bza" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="tarif" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="tarif_unr_1" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="tarif_unr_2" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mkt_1" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="beweg_schl" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="wirkung_dat" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="ant_aufn_dat" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="ant_eing_dat" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="anzahl_struk" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="btg" type="decimal(10,2)">
+                <constraints nullable="true" />
+            </column>
+
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
+        </createTable>
+        
+    </changeSet>
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
+</databaseChangeLog>

@@ -1,0 +1,92 @@
+{
+    "name": "Vka",
+    "fields": [
+        {
+            "fieldName": "vnr",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "versArt",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "prioritaet",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "bearbDat",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "bearbUhr",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "rd",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "ges",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "bza",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "tarif",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "tarifUnr1",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "tarifUnr2",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mkt1",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "bewegSchl",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "wirkungDat",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "antAufnDat",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "antEingDat",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "anzahlStruk",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "btg",
+            "fieldType": "BigDecimal"
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20181225081441",
+    "entityTableName": "vka",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*",
+    "angularJSSuffix": "vka"
+}

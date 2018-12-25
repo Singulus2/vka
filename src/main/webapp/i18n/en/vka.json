@@ -1,0 +1,39 @@
+{
+    "vkaApp": {
+        "vka": {
+            "home": {
+                "title": "Vkas",
+                "createLabel": "Create a new Vka",
+                "createOrEditLabel": "Create or edit a Vka"
+            },
+            "created": "A new Vka is created with identifier {{ param }}",
+            "updated": "A Vka is updated with identifier {{ param }}",
+            "deleted": "A Vka is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Vka {{ id }}?"
+            },
+            "detail": {
+                "title": "Vka"
+            },
+            "vnr": "Vnr",
+            "versArt": "Vers Art",
+            "prioritaet": "Prioritaet",
+            "bearbDat": "Bearb Dat",
+            "bearbUhr": "Bearb Uhr",
+            "status": "Status",
+            "rd": "Rd",
+            "ges": "Ges",
+            "bza": "Bza",
+            "tarif": "Tarif",
+            "tarifUnr1": "Tarif Unr 1",
+            "tarifUnr2": "Tarif Unr 2",
+            "mkt1": "Mkt 1",
+            "bewegSchl": "Beweg Schl",
+            "wirkungDat": "Wirkung Dat",
+            "antAufnDat": "Ant Aufn Dat",
+            "antEingDat": "Ant Eing Dat",
+            "anzahlStruk": "Anzahl Struk",
+            "btg": "Btg"
+        }
+    }
+}

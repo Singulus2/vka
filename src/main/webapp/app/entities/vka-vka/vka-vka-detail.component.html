@@ -1,0 +1,99 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="vka">
+            <h2><span jhiTranslate="vkaApp.vka.detail.title">Vka</span> {{vka.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="vkaApp.vka.vnr">Vnr</span></dt>
+                <dd>
+                    <span>{{vka.vnr}}</span>
+                </dd>
+                <dt><span jhiTranslate="vkaApp.vka.versArt">Vers Art</span></dt>
+                <dd>
+                    <span>{{vka.versArt}}</span>
+                </dd>
+                <dt><span jhiTranslate="vkaApp.vka.prioritaet">Prioritaet</span></dt>
+                <dd>
+                    <span>{{vka.prioritaet}}</span>
+                </dd>
+                <dt><span jhiTranslate="vkaApp.vka.bearbDat">Bearb Dat</span></dt>
+                <dd>
+                    <span>{{vka.bearbDat}}</span>
+                </dd>
+                <dt><span jhiTranslate="vkaApp.vka.bearbUhr">Bearb Uhr</span></dt>
+                <dd>
+                    <span>{{vka.bearbUhr}}</span>
+                </dd>
+                <dt><span jhiTranslate="vkaApp.vka.status">Status</span></dt>
+                <dd>
+                    <span>{{vka.status}}</span>
+                </dd>
+                <dt><span jhiTranslate="vkaApp.vka.rd">Rd</span></dt>
+                <dd>
+                    <span>{{vka.rd}}</span>
+                </dd>
+                <dt><span jhiTranslate="vkaApp.vka.ges">Ges</span></dt>
+                <dd>
+                    <span>{{vka.ges}}</span>
+                </dd>
+                <dt><span jhiTranslate="vkaApp.vka.bza">Bza</span></dt>
+                <dd>
+                    <span>{{vka.bza}}</span>
+                </dd>
+                <dt><span jhiTranslate="vkaApp.vka.tarif">Tarif</span></dt>
+                <dd>
+                    <span>{{vka.tarif}}</span>
+                </dd>
+                <dt><span jhiTranslate="vkaApp.vka.tarifUnr1">Tarif Unr 1</span></dt>
+                <dd>
+                    <span>{{vka.tarifUnr1}}</span>
+                </dd>
+                <dt><span jhiTranslate="vkaApp.vka.tarifUnr2">Tarif Unr 2</span></dt>
+                <dd>
+                    <span>{{vka.tarifUnr2}}</span>
+                </dd>
+                <dt><span jhiTranslate="vkaApp.vka.mkt1">Mkt 1</span></dt>
+                <dd>
+                    <span>{{vka.mkt1}}</span>
+                </dd>
+                <dt><span jhiTranslate="vkaApp.vka.bewegSchl">Beweg Schl</span></dt>
+                <dd>
+                    <span>{{vka.bewegSchl}}</span>
+                </dd>
+                <dt><span jhiTranslate="vkaApp.vka.wirkungDat">Wirkung Dat</span></dt>
+                <dd>
+                    <span>{{vka.wirkungDat}}</span>
+                </dd>
+                <dt><span jhiTranslate="vkaApp.vka.antAufnDat">Ant Aufn Dat</span></dt>
+                <dd>
+                    <span>{{vka.antAufnDat}}</span>
+                </dd>
+                <dt><span jhiTranslate="vkaApp.vka.antEingDat">Ant Eing Dat</span></dt>
+                <dd>
+                    <span>{{vka.antEingDat}}</span>
+                </dd>
+                <dt><span jhiTranslate="vkaApp.vka.anzahlStruk">Anzahl Struk</span></dt>
+                <dd>
+                    <span>{{vka.anzahlStruk}}</span>
+                </dd>
+                <dt><span jhiTranslate="vkaApp.vka.btg">Btg</span></dt>
+                <dd>
+                    <span>{{vka.btg}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/vka-vka', vka.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
