@@ -5,6 +5,9 @@ node {
         checkout scm
     }
 
+-    stage('check java') {
+-      cmd  "java -version"
+-    }
 
     stage('clean') {
         sh "chmod +x mvnw"
