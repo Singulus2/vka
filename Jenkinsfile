@@ -6,7 +6,7 @@ node {
     }
 
 -    stage('check java') {
--      cmd  "java -version"
+-      bat  "java -version"
 -    }
 
     stage('clean') {
