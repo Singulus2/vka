@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-node ("windows") {
+node {
   stage ('Build') {
  
     git url: 'https://github.com/Singulus2/vka'
