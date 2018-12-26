@@ -6,7 +6,7 @@ node {
     git url: 'https://github.com/Singulus2/vka'
  
  
-      bat "mvn clean install"
+      bat "mvnw clean install"
  
    }
 }
