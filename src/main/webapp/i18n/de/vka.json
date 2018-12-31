@@ -2,9 +2,9 @@
     "vkaApp": {
         "vka": {
             "home": {
-                "title": "Vkas",
-                "createLabel": "Vka erstellen",
-                "createOrEditLabel": "Vka erstellen oder bearbeiten"
+                "title": "Verkaufsanreize",
+                "createLabel": "Verkaufsanreize erstellen",
+                "createOrEditLabel": "Verkaufsanreize erstellen oder bearbeiten"
             },
             "created": "Vka erstellt mit ID {{ param }}",
             "updated": "Vka aktualisiert mit ID {{ param }}",
@@ -13,7 +13,7 @@
                 "question": "Soll Vka {{ id }} wirklich dauerhaft gelöscht werden?"
             },
             "detail": {
-                "title": "Vka"
+                "title": "Verkaufsanreize"
             },
             "vnr": "Vnr",
             "versArt": "Vers Art",
