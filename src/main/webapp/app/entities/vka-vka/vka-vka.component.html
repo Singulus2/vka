@@ -10,6 +10,31 @@
     </h2>
     <jhi-alert></jhi-alert>
     <br/>
+    <div class="row">
+        <div class="col-sm-12">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                    <input type="text" class="form-control"
+                           [(ngModel)]="criteria.mkt1" id="mkt1Equals" name="mkt1Equals"
+                           placeholder="{{ 'vkaApp.vka.mkt1' | translate }}">
+                    <input type="text" class="form-control"
+                           [(ngModel)]="criteria.vnr" id="vnrEquals" name="vnrEquals"
+                           placeholder="{{ 'vkaApp.vka.vnr' | translate }}">
+                     <div class="btn-group flex-btn-group-container">
+                        <button (click)="search(criteria)"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                        </button>
+                        <button (click)="clear(criteria)" *ngIf="criteria.areSet()"
+                            class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                        </button>
+                    </div>
+                 </div>
+            </form>
+        </div>
+    </div>
+    </br>
     <div class="table-responsive" *ngIf="vkas">
         <table class="table table-striped">
             <thead>

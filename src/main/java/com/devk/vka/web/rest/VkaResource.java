@@ -1,11 +1,14 @@
 package com.devk.vka.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.devk.vka.service.VkaQueryService;
 import com.devk.vka.service.VkaService;
+import com.devk.vka.service.dto.VkaCriteria;
+import com.devk.vka.service.dto.VkaDTO;
 import com.devk.vka.web.rest.errors.BadRequestAlertException;
 import com.devk.vka.web.rest.util.HeaderUtil;
 import com.devk.vka.web.rest.util.PaginationUtil;
-import com.devk.vka.service.dto.VkaDTO;
+
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,8 +38,11 @@ public class VkaResource {
 
     private final VkaService vkaService;
 
-    public VkaResource(VkaService vkaService) {
+    private final VkaQueryService vkaQueryService;
+
+    public VkaResource(VkaService vkaService, VkaQueryService vkaQueryService) {
         this.vkaService = vkaService;
+        this.vkaQueryService = vkaQueryService;
     }
 
     /**
@@ -85,15 +91,29 @@ public class VkaResource {
      * GET  /vkas : get all the vkas.
      *
      * @param pageable the pagination information
+     * @param criteria the criterias which the requested entities should match
      * @return the ResponseEntity with status 200 (OK) and the list of vkas in body
      */
     @GetMapping("/vkas")
     @Timed
-    public ResponseEntity<List<VkaDTO>> getAllVkas(Pageable pageable) {
-        log.debug("REST request to get a page of Vkas");
-        Page<VkaDTO> page = vkaService.findAll(pageable);
+    public ResponseEntity<List<VkaDTO>> getAllVkas(VkaCriteria criteria, Pageable pageable) {
+        log.debug("REST request to get Vkas by criteria: {}", criteria);
+        Page<VkaDTO> page = vkaQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/vkas");
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+    * GET  /vkas/count : count all the vkas.
+    *
+    * @param criteria the criterias which the requested entities should match
+    * @return the ResponseEntity with status 200 (OK) and the count in body
+    */
+    @GetMapping("/vkas/count")
+    @Timed
+    public ResponseEntity<Long> countVkas(VkaCriteria criteria) {
+        log.debug("REST request to count Vkas by criteria: {}", criteria);
+        return ResponseEntity.ok().body(vkaQueryService.countByCriteria(criteria));
     }
 
     /**

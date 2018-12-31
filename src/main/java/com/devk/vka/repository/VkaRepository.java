@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface VkaRepository extends JpaRepository<Vka, Long> {
+public interface VkaRepository extends JpaRepository<Vka, Long>, JpaSpecificationExecutor<Vka> {
 
 }

@@ -1,13 +1,14 @@
 package com.devk.vka.web.rest;
 
-import com.devk.vka.VkaApp;
-
-import com.devk.vka.domain.Vka;
-import com.devk.vka.repository.VkaRepository;
-import com.devk.vka.service.VkaService;
+import com.devk.vka.service.dto.VkaCriteria;
 import com.devk.vka.service.dto.VkaDTO;
 import com.devk.vka.service.mapper.VkaMapper;
 import com.devk.vka.web.rest.errors.ExceptionTranslator;
+import com.devk.vka.VkaApp;
+import com.devk.vka.domain.Vka;
+import com.devk.vka.repository.VkaRepository;
+import com.devk.vka.service.VkaQueryService;
+import com.devk.vka.service.VkaService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -111,6 +112,9 @@ public class VkaResourceIntTest {
     private VkaService vkaService;
 
     @Autowired
+    private VkaQueryService vkaQueryService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -132,7 +136,7 @@ public class VkaResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final VkaResource vkaResource = new VkaResource(vkaService);
+        final VkaResource vkaResource = new VkaResource(vkaService, vkaQueryService);
         this.restVkaMockMvc = MockMvcBuilders.standaloneSetup(vkaResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -296,6 +300,799 @@ public class VkaResourceIntTest {
             .andExpect(jsonPath("$.anzahlStruk").value(DEFAULT_ANZAHL_STRUK.toString()))
             .andExpect(jsonPath("$.btg").value(DEFAULT_BTG.intValue()));
     }
+
+    @Test
+    @Transactional
+    public void getAllVkasByVnrIsEqualToSomething() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where vnr equals to DEFAULT_VNR
+        defaultVkaShouldBeFound("vnr.equals=" + DEFAULT_VNR);
+
+        // Get all the vkaList where vnr equals to UPDATED_VNR
+        defaultVkaShouldNotBeFound("vnr.equals=" + UPDATED_VNR);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByVnrIsInShouldWork() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where vnr in DEFAULT_VNR or UPDATED_VNR
+        defaultVkaShouldBeFound("vnr.in=" + DEFAULT_VNR + "," + UPDATED_VNR);
+
+        // Get all the vkaList where vnr equals to UPDATED_VNR
+        defaultVkaShouldNotBeFound("vnr.in=" + UPDATED_VNR);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByVnrIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where vnr is not null
+        defaultVkaShouldBeFound("vnr.specified=true");
+
+        // Get all the vkaList where vnr is null
+        defaultVkaShouldNotBeFound("vnr.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByVersArtIsEqualToSomething() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where versArt equals to DEFAULT_VERS_ART
+        defaultVkaShouldBeFound("versArt.equals=" + DEFAULT_VERS_ART);
+
+        // Get all the vkaList where versArt equals to UPDATED_VERS_ART
+        defaultVkaShouldNotBeFound("versArt.equals=" + UPDATED_VERS_ART);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByVersArtIsInShouldWork() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where versArt in DEFAULT_VERS_ART or UPDATED_VERS_ART
+        defaultVkaShouldBeFound("versArt.in=" + DEFAULT_VERS_ART + "," + UPDATED_VERS_ART);
+
+        // Get all the vkaList where versArt equals to UPDATED_VERS_ART
+        defaultVkaShouldNotBeFound("versArt.in=" + UPDATED_VERS_ART);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByVersArtIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where versArt is not null
+        defaultVkaShouldBeFound("versArt.specified=true");
+
+        // Get all the vkaList where versArt is null
+        defaultVkaShouldNotBeFound("versArt.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByPrioritaetIsEqualToSomething() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where prioritaet equals to DEFAULT_PRIORITAET
+        defaultVkaShouldBeFound("prioritaet.equals=" + DEFAULT_PRIORITAET);
+
+        // Get all the vkaList where prioritaet equals to UPDATED_PRIORITAET
+        defaultVkaShouldNotBeFound("prioritaet.equals=" + UPDATED_PRIORITAET);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByPrioritaetIsInShouldWork() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where prioritaet in DEFAULT_PRIORITAET or UPDATED_PRIORITAET
+        defaultVkaShouldBeFound("prioritaet.in=" + DEFAULT_PRIORITAET + "," + UPDATED_PRIORITAET);
+
+        // Get all the vkaList where prioritaet equals to UPDATED_PRIORITAET
+        defaultVkaShouldNotBeFound("prioritaet.in=" + UPDATED_PRIORITAET);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByPrioritaetIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where prioritaet is not null
+        defaultVkaShouldBeFound("prioritaet.specified=true");
+
+        // Get all the vkaList where prioritaet is null
+        defaultVkaShouldNotBeFound("prioritaet.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByBearbDatIsEqualToSomething() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where bearbDat equals to DEFAULT_BEARB_DAT
+        defaultVkaShouldBeFound("bearbDat.equals=" + DEFAULT_BEARB_DAT);
+
+        // Get all the vkaList where bearbDat equals to UPDATED_BEARB_DAT
+        defaultVkaShouldNotBeFound("bearbDat.equals=" + UPDATED_BEARB_DAT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByBearbDatIsInShouldWork() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where bearbDat in DEFAULT_BEARB_DAT or UPDATED_BEARB_DAT
+        defaultVkaShouldBeFound("bearbDat.in=" + DEFAULT_BEARB_DAT + "," + UPDATED_BEARB_DAT);
+
+        // Get all the vkaList where bearbDat equals to UPDATED_BEARB_DAT
+        defaultVkaShouldNotBeFound("bearbDat.in=" + UPDATED_BEARB_DAT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByBearbDatIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where bearbDat is not null
+        defaultVkaShouldBeFound("bearbDat.specified=true");
+
+        // Get all the vkaList where bearbDat is null
+        defaultVkaShouldNotBeFound("bearbDat.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByBearbUhrIsEqualToSomething() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where bearbUhr equals to DEFAULT_BEARB_UHR
+        defaultVkaShouldBeFound("bearbUhr.equals=" + DEFAULT_BEARB_UHR);
+
+        // Get all the vkaList where bearbUhr equals to UPDATED_BEARB_UHR
+        defaultVkaShouldNotBeFound("bearbUhr.equals=" + UPDATED_BEARB_UHR);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByBearbUhrIsInShouldWork() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where bearbUhr in DEFAULT_BEARB_UHR or UPDATED_BEARB_UHR
+        defaultVkaShouldBeFound("bearbUhr.in=" + DEFAULT_BEARB_UHR + "," + UPDATED_BEARB_UHR);
+
+        // Get all the vkaList where bearbUhr equals to UPDATED_BEARB_UHR
+        defaultVkaShouldNotBeFound("bearbUhr.in=" + UPDATED_BEARB_UHR);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByBearbUhrIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where bearbUhr is not null
+        defaultVkaShouldBeFound("bearbUhr.specified=true");
+
+        // Get all the vkaList where bearbUhr is null
+        defaultVkaShouldNotBeFound("bearbUhr.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByStatusIsEqualToSomething() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where status equals to DEFAULT_STATUS
+        defaultVkaShouldBeFound("status.equals=" + DEFAULT_STATUS);
+
+        // Get all the vkaList where status equals to UPDATED_STATUS
+        defaultVkaShouldNotBeFound("status.equals=" + UPDATED_STATUS);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByStatusIsInShouldWork() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where status in DEFAULT_STATUS or UPDATED_STATUS
+        defaultVkaShouldBeFound("status.in=" + DEFAULT_STATUS + "," + UPDATED_STATUS);
+
+        // Get all the vkaList where status equals to UPDATED_STATUS
+        defaultVkaShouldNotBeFound("status.in=" + UPDATED_STATUS);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByStatusIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where status is not null
+        defaultVkaShouldBeFound("status.specified=true");
+
+        // Get all the vkaList where status is null
+        defaultVkaShouldNotBeFound("status.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByRdIsEqualToSomething() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where rd equals to DEFAULT_RD
+        defaultVkaShouldBeFound("rd.equals=" + DEFAULT_RD);
+
+        // Get all the vkaList where rd equals to UPDATED_RD
+        defaultVkaShouldNotBeFound("rd.equals=" + UPDATED_RD);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByRdIsInShouldWork() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where rd in DEFAULT_RD or UPDATED_RD
+        defaultVkaShouldBeFound("rd.in=" + DEFAULT_RD + "," + UPDATED_RD);
+
+        // Get all the vkaList where rd equals to UPDATED_RD
+        defaultVkaShouldNotBeFound("rd.in=" + UPDATED_RD);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByRdIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where rd is not null
+        defaultVkaShouldBeFound("rd.specified=true");
+
+        // Get all the vkaList where rd is null
+        defaultVkaShouldNotBeFound("rd.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByGesIsEqualToSomething() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where ges equals to DEFAULT_GES
+        defaultVkaShouldBeFound("ges.equals=" + DEFAULT_GES);
+
+        // Get all the vkaList where ges equals to UPDATED_GES
+        defaultVkaShouldNotBeFound("ges.equals=" + UPDATED_GES);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByGesIsInShouldWork() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where ges in DEFAULT_GES or UPDATED_GES
+        defaultVkaShouldBeFound("ges.in=" + DEFAULT_GES + "," + UPDATED_GES);
+
+        // Get all the vkaList where ges equals to UPDATED_GES
+        defaultVkaShouldNotBeFound("ges.in=" + UPDATED_GES);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByGesIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where ges is not null
+        defaultVkaShouldBeFound("ges.specified=true");
+
+        // Get all the vkaList where ges is null
+        defaultVkaShouldNotBeFound("ges.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByBzaIsEqualToSomething() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where bza equals to DEFAULT_BZA
+        defaultVkaShouldBeFound("bza.equals=" + DEFAULT_BZA);
+
+        // Get all the vkaList where bza equals to UPDATED_BZA
+        defaultVkaShouldNotBeFound("bza.equals=" + UPDATED_BZA);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByBzaIsInShouldWork() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where bza in DEFAULT_BZA or UPDATED_BZA
+        defaultVkaShouldBeFound("bza.in=" + DEFAULT_BZA + "," + UPDATED_BZA);
+
+        // Get all the vkaList where bza equals to UPDATED_BZA
+        defaultVkaShouldNotBeFound("bza.in=" + UPDATED_BZA);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByBzaIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where bza is not null
+        defaultVkaShouldBeFound("bza.specified=true");
+
+        // Get all the vkaList where bza is null
+        defaultVkaShouldNotBeFound("bza.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByTarifIsEqualToSomething() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where tarif equals to DEFAULT_TARIF
+        defaultVkaShouldBeFound("tarif.equals=" + DEFAULT_TARIF);
+
+        // Get all the vkaList where tarif equals to UPDATED_TARIF
+        defaultVkaShouldNotBeFound("tarif.equals=" + UPDATED_TARIF);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByTarifIsInShouldWork() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where tarif in DEFAULT_TARIF or UPDATED_TARIF
+        defaultVkaShouldBeFound("tarif.in=" + DEFAULT_TARIF + "," + UPDATED_TARIF);
+
+        // Get all the vkaList where tarif equals to UPDATED_TARIF
+        defaultVkaShouldNotBeFound("tarif.in=" + UPDATED_TARIF);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByTarifIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where tarif is not null
+        defaultVkaShouldBeFound("tarif.specified=true");
+
+        // Get all the vkaList where tarif is null
+        defaultVkaShouldNotBeFound("tarif.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByTarifUnr1IsEqualToSomething() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where tarifUnr1 equals to DEFAULT_TARIF_UNR_1
+        defaultVkaShouldBeFound("tarifUnr1.equals=" + DEFAULT_TARIF_UNR_1);
+
+        // Get all the vkaList where tarifUnr1 equals to UPDATED_TARIF_UNR_1
+        defaultVkaShouldNotBeFound("tarifUnr1.equals=" + UPDATED_TARIF_UNR_1);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByTarifUnr1IsInShouldWork() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where tarifUnr1 in DEFAULT_TARIF_UNR_1 or UPDATED_TARIF_UNR_1
+        defaultVkaShouldBeFound("tarifUnr1.in=" + DEFAULT_TARIF_UNR_1 + "," + UPDATED_TARIF_UNR_1);
+
+        // Get all the vkaList where tarifUnr1 equals to UPDATED_TARIF_UNR_1
+        defaultVkaShouldNotBeFound("tarifUnr1.in=" + UPDATED_TARIF_UNR_1);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByTarifUnr1IsNullOrNotNull() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where tarifUnr1 is not null
+        defaultVkaShouldBeFound("tarifUnr1.specified=true");
+
+        // Get all the vkaList where tarifUnr1 is null
+        defaultVkaShouldNotBeFound("tarifUnr1.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByTarifUnr2IsEqualToSomething() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where tarifUnr2 equals to DEFAULT_TARIF_UNR_2
+        defaultVkaShouldBeFound("tarifUnr2.equals=" + DEFAULT_TARIF_UNR_2);
+
+        // Get all the vkaList where tarifUnr2 equals to UPDATED_TARIF_UNR_2
+        defaultVkaShouldNotBeFound("tarifUnr2.equals=" + UPDATED_TARIF_UNR_2);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByTarifUnr2IsInShouldWork() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where tarifUnr2 in DEFAULT_TARIF_UNR_2 or UPDATED_TARIF_UNR_2
+        defaultVkaShouldBeFound("tarifUnr2.in=" + DEFAULT_TARIF_UNR_2 + "," + UPDATED_TARIF_UNR_2);
+
+        // Get all the vkaList where tarifUnr2 equals to UPDATED_TARIF_UNR_2
+        defaultVkaShouldNotBeFound("tarifUnr2.in=" + UPDATED_TARIF_UNR_2);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByTarifUnr2IsNullOrNotNull() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where tarifUnr2 is not null
+        defaultVkaShouldBeFound("tarifUnr2.specified=true");
+
+        // Get all the vkaList where tarifUnr2 is null
+        defaultVkaShouldNotBeFound("tarifUnr2.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByMkt1IsEqualToSomething() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where mkt1 equals to DEFAULT_MKT_1
+        defaultVkaShouldBeFound("mkt1.equals=" + DEFAULT_MKT_1);
+
+        // Get all the vkaList where mkt1 equals to UPDATED_MKT_1
+        defaultVkaShouldNotBeFound("mkt1.equals=" + UPDATED_MKT_1);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByMkt1IsInShouldWork() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where mkt1 in DEFAULT_MKT_1 or UPDATED_MKT_1
+        defaultVkaShouldBeFound("mkt1.in=" + DEFAULT_MKT_1 + "," + UPDATED_MKT_1);
+
+        // Get all the vkaList where mkt1 equals to UPDATED_MKT_1
+        defaultVkaShouldNotBeFound("mkt1.in=" + UPDATED_MKT_1);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByMkt1IsNullOrNotNull() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where mkt1 is not null
+        defaultVkaShouldBeFound("mkt1.specified=true");
+
+        // Get all the vkaList where mkt1 is null
+        defaultVkaShouldNotBeFound("mkt1.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByBewegSchlIsEqualToSomething() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where bewegSchl equals to DEFAULT_BEWEG_SCHL
+        defaultVkaShouldBeFound("bewegSchl.equals=" + DEFAULT_BEWEG_SCHL);
+
+        // Get all the vkaList where bewegSchl equals to UPDATED_BEWEG_SCHL
+        defaultVkaShouldNotBeFound("bewegSchl.equals=" + UPDATED_BEWEG_SCHL);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByBewegSchlIsInShouldWork() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where bewegSchl in DEFAULT_BEWEG_SCHL or UPDATED_BEWEG_SCHL
+        defaultVkaShouldBeFound("bewegSchl.in=" + DEFAULT_BEWEG_SCHL + "," + UPDATED_BEWEG_SCHL);
+
+        // Get all the vkaList where bewegSchl equals to UPDATED_BEWEG_SCHL
+        defaultVkaShouldNotBeFound("bewegSchl.in=" + UPDATED_BEWEG_SCHL);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByBewegSchlIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where bewegSchl is not null
+        defaultVkaShouldBeFound("bewegSchl.specified=true");
+
+        // Get all the vkaList where bewegSchl is null
+        defaultVkaShouldNotBeFound("bewegSchl.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByWirkungDatIsEqualToSomething() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where wirkungDat equals to DEFAULT_WIRKUNG_DAT
+        defaultVkaShouldBeFound("wirkungDat.equals=" + DEFAULT_WIRKUNG_DAT);
+
+        // Get all the vkaList where wirkungDat equals to UPDATED_WIRKUNG_DAT
+        defaultVkaShouldNotBeFound("wirkungDat.equals=" + UPDATED_WIRKUNG_DAT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByWirkungDatIsInShouldWork() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where wirkungDat in DEFAULT_WIRKUNG_DAT or UPDATED_WIRKUNG_DAT
+        defaultVkaShouldBeFound("wirkungDat.in=" + DEFAULT_WIRKUNG_DAT + "," + UPDATED_WIRKUNG_DAT);
+
+        // Get all the vkaList where wirkungDat equals to UPDATED_WIRKUNG_DAT
+        defaultVkaShouldNotBeFound("wirkungDat.in=" + UPDATED_WIRKUNG_DAT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByWirkungDatIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where wirkungDat is not null
+        defaultVkaShouldBeFound("wirkungDat.specified=true");
+
+        // Get all the vkaList where wirkungDat is null
+        defaultVkaShouldNotBeFound("wirkungDat.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByAntAufnDatIsEqualToSomething() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where antAufnDat equals to DEFAULT_ANT_AUFN_DAT
+        defaultVkaShouldBeFound("antAufnDat.equals=" + DEFAULT_ANT_AUFN_DAT);
+
+        // Get all the vkaList where antAufnDat equals to UPDATED_ANT_AUFN_DAT
+        defaultVkaShouldNotBeFound("antAufnDat.equals=" + UPDATED_ANT_AUFN_DAT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByAntAufnDatIsInShouldWork() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where antAufnDat in DEFAULT_ANT_AUFN_DAT or UPDATED_ANT_AUFN_DAT
+        defaultVkaShouldBeFound("antAufnDat.in=" + DEFAULT_ANT_AUFN_DAT + "," + UPDATED_ANT_AUFN_DAT);
+
+        // Get all the vkaList where antAufnDat equals to UPDATED_ANT_AUFN_DAT
+        defaultVkaShouldNotBeFound("antAufnDat.in=" + UPDATED_ANT_AUFN_DAT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByAntAufnDatIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where antAufnDat is not null
+        defaultVkaShouldBeFound("antAufnDat.specified=true");
+
+        // Get all the vkaList where antAufnDat is null
+        defaultVkaShouldNotBeFound("antAufnDat.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByAntEingDatIsEqualToSomething() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where antEingDat equals to DEFAULT_ANT_EING_DAT
+        defaultVkaShouldBeFound("antEingDat.equals=" + DEFAULT_ANT_EING_DAT);
+
+        // Get all the vkaList where antEingDat equals to UPDATED_ANT_EING_DAT
+        defaultVkaShouldNotBeFound("antEingDat.equals=" + UPDATED_ANT_EING_DAT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByAntEingDatIsInShouldWork() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where antEingDat in DEFAULT_ANT_EING_DAT or UPDATED_ANT_EING_DAT
+        defaultVkaShouldBeFound("antEingDat.in=" + DEFAULT_ANT_EING_DAT + "," + UPDATED_ANT_EING_DAT);
+
+        // Get all the vkaList where antEingDat equals to UPDATED_ANT_EING_DAT
+        defaultVkaShouldNotBeFound("antEingDat.in=" + UPDATED_ANT_EING_DAT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByAntEingDatIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where antEingDat is not null
+        defaultVkaShouldBeFound("antEingDat.specified=true");
+
+        // Get all the vkaList where antEingDat is null
+        defaultVkaShouldNotBeFound("antEingDat.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByAnzahlStrukIsEqualToSomething() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where anzahlStruk equals to DEFAULT_ANZAHL_STRUK
+        defaultVkaShouldBeFound("anzahlStruk.equals=" + DEFAULT_ANZAHL_STRUK);
+
+        // Get all the vkaList where anzahlStruk equals to UPDATED_ANZAHL_STRUK
+        defaultVkaShouldNotBeFound("anzahlStruk.equals=" + UPDATED_ANZAHL_STRUK);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByAnzahlStrukIsInShouldWork() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where anzahlStruk in DEFAULT_ANZAHL_STRUK or UPDATED_ANZAHL_STRUK
+        defaultVkaShouldBeFound("anzahlStruk.in=" + DEFAULT_ANZAHL_STRUK + "," + UPDATED_ANZAHL_STRUK);
+
+        // Get all the vkaList where anzahlStruk equals to UPDATED_ANZAHL_STRUK
+        defaultVkaShouldNotBeFound("anzahlStruk.in=" + UPDATED_ANZAHL_STRUK);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByAnzahlStrukIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where anzahlStruk is not null
+        defaultVkaShouldBeFound("anzahlStruk.specified=true");
+
+        // Get all the vkaList where anzahlStruk is null
+        defaultVkaShouldNotBeFound("anzahlStruk.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByBtgIsEqualToSomething() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where btg equals to DEFAULT_BTG
+        defaultVkaShouldBeFound("btg.equals=" + DEFAULT_BTG);
+
+        // Get all the vkaList where btg equals to UPDATED_BTG
+        defaultVkaShouldNotBeFound("btg.equals=" + UPDATED_BTG);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByBtgIsInShouldWork() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where btg in DEFAULT_BTG or UPDATED_BTG
+        defaultVkaShouldBeFound("btg.in=" + DEFAULT_BTG + "," + UPDATED_BTG);
+
+        // Get all the vkaList where btg equals to UPDATED_BTG
+        defaultVkaShouldNotBeFound("btg.in=" + UPDATED_BTG);
+    }
+
+    @Test
+    @Transactional
+    public void getAllVkasByBtgIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        vkaRepository.saveAndFlush(vka);
+
+        // Get all the vkaList where btg is not null
+        defaultVkaShouldBeFound("btg.specified=true");
+
+        // Get all the vkaList where btg is null
+        defaultVkaShouldNotBeFound("btg.specified=false");
+    }
+    /**
+     * Executes the search, and checks that the default entity is returned
+     */
+    private void defaultVkaShouldBeFound(String filter) throws Exception {
+        restVkaMockMvc.perform(get("/api/vkas?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(vka.getId().intValue())))
+            .andExpect(jsonPath("$.[*].vnr").value(hasItem(DEFAULT_VNR.toString())))
+            .andExpect(jsonPath("$.[*].versArt").value(hasItem(DEFAULT_VERS_ART.toString())))
+            .andExpect(jsonPath("$.[*].prioritaet").value(hasItem(DEFAULT_PRIORITAET.toString())))
+            .andExpect(jsonPath("$.[*].bearbDat").value(hasItem(DEFAULT_BEARB_DAT.toString())))
+            .andExpect(jsonPath("$.[*].bearbUhr").value(hasItem(DEFAULT_BEARB_UHR.toString())))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].rd").value(hasItem(DEFAULT_RD.toString())))
+            .andExpect(jsonPath("$.[*].ges").value(hasItem(DEFAULT_GES.toString())))
+            .andExpect(jsonPath("$.[*].bza").value(hasItem(DEFAULT_BZA.toString())))
+            .andExpect(jsonPath("$.[*].tarif").value(hasItem(DEFAULT_TARIF.toString())))
+            .andExpect(jsonPath("$.[*].tarifUnr1").value(hasItem(DEFAULT_TARIF_UNR_1.toString())))
+            .andExpect(jsonPath("$.[*].tarifUnr2").value(hasItem(DEFAULT_TARIF_UNR_2.toString())))
+            .andExpect(jsonPath("$.[*].mkt1").value(hasItem(DEFAULT_MKT_1.toString())))
+            .andExpect(jsonPath("$.[*].bewegSchl").value(hasItem(DEFAULT_BEWEG_SCHL.toString())))
+            .andExpect(jsonPath("$.[*].wirkungDat").value(hasItem(DEFAULT_WIRKUNG_DAT.toString())))
+            .andExpect(jsonPath("$.[*].antAufnDat").value(hasItem(DEFAULT_ANT_AUFN_DAT.toString())))
+            .andExpect(jsonPath("$.[*].antEingDat").value(hasItem(DEFAULT_ANT_EING_DAT.toString())))
+            .andExpect(jsonPath("$.[*].anzahlStruk").value(hasItem(DEFAULT_ANZAHL_STRUK.toString())))
+            .andExpect(jsonPath("$.[*].btg").value(hasItem(DEFAULT_BTG.intValue())));
+
+        // Check, that the count call also returns 1
+        restVkaMockMvc.perform(get("/api/vkas/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().string("1"));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned
+     */
+    private void defaultVkaShouldNotBeFound(String filter) throws Exception {
+        restVkaMockMvc.perform(get("/api/vkas?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+
+        // Check, that the count call also returns 0
+        restVkaMockMvc.perform(get("/api/vkas/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().string("0"));
+    }
+
 
     @Test
     @Transactional

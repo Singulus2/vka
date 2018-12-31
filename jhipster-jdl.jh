@@ -29,7 +29,7 @@ entity Vka {
  * @author The JHipster team.
  */
 
-
+filter Vka
 // Set pagination options
 paginate Vka with pagination
 
@@ -41,3 +41,5 @@ service all with serviceClass
 
 // Set an angular suffix
 angularSuffix * with vka
+ 
+

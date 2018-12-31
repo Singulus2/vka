@@ -29,6 +29,7 @@ export class VkaVkaComponent implements OnInit, OnDestroy {
     predicate: any;
     previousPage: any;
     reverse: any;
+    criteria: any;
 
     constructor(
         protected vkaService: VkaVkaService,
@@ -46,11 +47,42 @@ export class VkaVkaComponent implements OnInit, OnDestroy {
             this.reverse = data.pagingParams.ascending;
             this.predicate = data.pagingParams.predicate;
         });
-    }
+       this.criteria = {
+            mkt1: null,
+            vnr: null,
+            wirkungGueltigAb: null,
+            wirkungGueltigBis: null,
+            areSet() {
+                return this.mkt1 != null || this.vnr != null || this.wirkungGueltigAb != null || this.wirkungGueltigBis != null;
+            },
+            clear() {
+                this.mkt1 = null;
+                this.vnr = null;
+                this.wirkungDatAb = null;
+                this.wirkungDatBis = null;
+            }
+        };
+     }
+        loadAll() {
+         const criteria = [];
 
-    loadAll() {
-        this.vkaService
+        if (this.criteria.areSet()) {
+            if (this.criteria.mkt1 != null && this.criteria.mkt1 !== '') {
+                criteria.push({key: 'mkt1.equals', value: this.criteria.mkt1});
+            }
+            if (this.criteria.vnr != null && this.criteria.vnr >= 0) {
+                criteria.push({key: 'vnr.equals', value: this.criteria.vnr});
+            }
+           if (this.criteria.wirkungGueltigAb != null && this.criteria.wirkungGueltigAb >= 0) {
+                criteria.push({key: 'wirkungGueltigAb.equals', value: this.criteria.wirkungGueltigAb});
+            }
+           if (this.criteria.wirkungGueltigBis != null && this.criteria.wirkungGueltigBis >= 0) {
+                criteria.push({key: 'wirkungGueltigBis.equals', value: this.criteria.wirkungGueltigBis});
+            }
+        }
+            this.vkaService
             .query({
+                criteria,
                 page: this.page - 1,
                 size: this.itemsPerPage,
                 sort: this.sort()
@@ -88,6 +120,7 @@ export class VkaVkaComponent implements OnInit, OnDestroy {
                 sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
             }
         ]);
+        this.criteria.clear();
         this.loadAll();
     }
 
@@ -118,8 +151,13 @@ export class VkaVkaComponent implements OnInit, OnDestroy {
         }
         return result;
     }
+    search(criteria) {
+        if (criteria.areSet()) {
+            this.loadAll();
+        }
+    }
 
-    protected paginateVkas(data: IVkaVka[], headers: HttpHeaders) {
+    paginateVkas(data: IVkaVka[], headers: HttpHeaders) {
         this.links = this.parseLinks.parse(headers.get('link'));
         this.totalItems = parseInt(headers.get('X-Total-Count'), 10);
         this.queryCount = this.totalItems;
